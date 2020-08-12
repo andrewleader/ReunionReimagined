@@ -12,27 +12,34 @@ namespace ReunionConsoleApp
         {
             ReunionApp.OnActivated += ReunionApp_OnActivated;
 
-            Console.WriteLine("Hello World!");
+            if (!ReunionApp.WasProcessActivated())
+            {
+                Console.WriteLine("Hello World!");
 
-            Console.WriteLine("To receive a toast, press any key...");
+                Console.WriteLine("To receive a toast, press enter...");
 
-            Console.ReadLine();
+                Console.ReadLine();
 
-            var content = new ToastContentBuilder()
-                .AddText("Hi! Please enter your name!")
-                .AddInputTextBox("name", "Your name")
-                .AddButton("Submit", ToastActivationType.Foreground, "submit")
-                .AddToastActivationInfo("helloConsoleArgs", ToastActivationType.Foreground)
-                .GetToastContent();
+                var content = new ToastContentBuilder()
+                    .AddText("Hi! Please enter your name!")
+                    .AddInputTextBox("name", "Your name")
+                    .AddButton("Submit", ToastActivationType.Foreground, "submit")
+                    .AddToastActivationInfo("helloConsoleArgs", ToastActivationType.Foreground)
+                    .GetToastContent();
 
-            var notif = new ToastNotification(content.GetXml());
+                var notif = new ToastNotification(content.GetXml());
 
-            // Only difference here is calling the Compat API so that works down-level
-            ToastNotificationManagerCompat.CreateToastNotifier().Show(notif);
+                // Only difference here is calling the Compat API so that works down-level
+                ToastNotificationManagerCompat.CreateToastNotifier().Show(notif);
 
-            Console.WriteLine("You should try clicking the toast...");
+                Console.WriteLine("You should try clicking the toast...");
 
-            Console.ReadLine();
+                Console.ReadLine();
+            }
+            else
+            {
+                Console.ReadLine();
+            }
         }
 
         private static void ReunionApp_OnActivated(Windows.ApplicationModel.Activation.IActivatedEventArgs args)
@@ -40,7 +47,7 @@ namespace ReunionConsoleApp
             if (args is ToastNotificationActivatedEventArgsCompat toastArgs)
             {
                 Console.WriteLine($"Hey {toastArgs.UserInput["name"]}! Nice to meet you!");
-                Console.WriteLine("Press any key to exit.");
+                Console.WriteLine("Press enter to exit.");
             }
         }
     }

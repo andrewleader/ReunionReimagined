@@ -31,6 +31,15 @@ namespace Reunion
             // Nothing... the static class initializer will take care of this
         }
 
+        /// <summary>
+        /// Returns true if the app was activated through modern activation and OnActivated will be triggered.
+        /// </summary>
+        /// <returns></returns>
+        public static bool WasProcessActivated()
+        {
+            return DesktopNotificationManagerCompat.WasProcessToastActivated();
+        }
+
         private static void DesktopNotificationManagerCompat_OnActivated(NotificationActivatiedEventArgs e)
         {
             if (OnActivated != null)
