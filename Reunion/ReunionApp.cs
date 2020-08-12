@@ -60,7 +60,7 @@ namespace Reunion
 
         private static string GetManifestText()
         {
-            string location = Path.Combine(Directory.GetCurrentDirectory(), "Package.appxmanifest");
+            string location = Path.Combine(AppContext.BaseDirectory, "Package.appxmanifest");
             if (File.Exists(location))
             {
                 return File.ReadAllText(location);
